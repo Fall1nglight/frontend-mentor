@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+
+    <title>Frontend Mentor | Order summary card</title>
+
+    <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display&display=swap');
+
+      * {
+        font-family: 'Red Hat Display', sans-serif;
+        font-size: 1rem;
+      }
+
+      body {
+        background-color: hsl(225, 100%, 94%);
+      }
+
+      .attribution {
+        font-size: 11px;
+        text-align: center;
+      }
+      .attribution a {
+        color: hsl(228, 45%, 44%);
+      }
+
+      .container {
+        width: 90%;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+      }
+
+      .card {
+        width: 100%;
+        box-shadow: 1px 1px 10px black;
+        border-radius: 15px;
+        background-color: white;
+      }
+
+      .banner-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 15px 15px 0 0;
+        margin-bottom: 2rem;
+      }
+
+      .card-title {
+        font-size: 2rem;
+        font-weight: 900;
+        letter-spacing: 1px;
+        text-align: center;
+        margin-bottom: 1.25rem;
+      }
+
+      .card-body {
+        padding: 0 2rem 0 2rem;
+      }
+
+      .card-text {
+        text-align: center;
+        color: gray;
+        margin-bottom: 1.25rem;
+      }
+
+      .card-menu {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: hsl(225, 100%, 98%);
+        border-radius: 15px;
+        padding: 0 0.5rem 0 0.5rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .menu-image {
+        margin-right: 1rem;
+      }
+
+      .price {
+        line-height: 1.5;
+        color: gray;
+        margin-right: auto;
+      }
+
+      .highlighted-text {
+        font-weight: 900;
+        color: black;
+      }
+
+      .card-menu-link {
+        font-weight: 700;
+      }
+
+      .btn {
+        padding: 1rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        display: block;
+        text-decoration: none;
+        text-align: center;
+      }
+
+      #payment {
+        background-color: hsl(245, 75%, 52%);
+        color: white;
+        border-radius: 15px;
+        box-shadow: 0px 20px 5px hsl(225, 100%, 94%);
+        margin-bottom: 1.25rem;
+      }
+
+      #cancel {
+        margin-bottom: 1.25rem;
+        color: gray;
+      }
+
+      @media (min-width: 375px) {
+        .card {
+          width: 90%;
+        }
+      }
+
+      @media (min-width: 520px) {
+        .card {
+          width: 400px;
+        }
+
+        .container {
+          width: 80%;
+        }
+
+        .card-menu {
+          padding: 0 1rem 0 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <img
+          src="./images/illustration-hero.svg"
+          alt="Hero (Illustration)"
+          class="banner-image"
+        />
+        <div class="card-title">Order Summary</div>
+        <div class="card-body">
+          <div class="card-text">
+            You can now listen to millions of songs, audiobooks, and podcasts on
+            any device anywhere you like!
+          </div>
+          <div class="card-menu">
+            <img
+              src="./images/icon-music.svg"
+              alt="Music icon"
+              class="menu-image"
+            />
+            <p class="price">
+              <span class="highlighted-text">Annual Plan</span>
+              <br />
+              $59.99/year
+            </p>
+
+            <a href="#" class="card-menu-link">Change</a>
+          </div>
+          <a href="#" class="btn" id="payment">Proceed to Payment</a>
+          <a href="#" class="btn" id="cancel">Cancel Order</a>
+        </div>
+      </div>
+    </div>
+    <!--     
+    <div class="attribution">
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+        >Frontend Mentor</a
+      >. Coded by <a href="#">Your Name Here</a>.
+    </div>
+ -->
+  </body>
+</html>
