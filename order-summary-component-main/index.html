@@ -21,10 +21,22 @@
       * {
         font-family: 'Red Hat Display', sans-serif;
         font-size: 1rem;
+        padding: 0;
+        margin: 0;
+      }
+
+      html,
+      body {
+        min-height: 100%;
       }
 
       body {
+        background: url('./images/pattern-background-desktop.svg') no-repeat;
         background-color: hsl(225, 100%, 94%);
+        background-size: 100%;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
       }
 
       .attribution {
@@ -70,7 +82,7 @@
 
       .card-text {
         text-align: center;
-        color: gray;
+        color: hsl(224, 23%, 55%);
         margin-bottom: 1.25rem;
       }
 
@@ -80,7 +92,7 @@
         justify-content: space-between;
         background-color: hsl(225, 100%, 98%);
         border-radius: 15px;
-        padding: 0 0.5rem 0 0.5rem;
+        padding: 0.5rem;
         margin-bottom: 1.25rem;
       }
 
@@ -90,7 +102,7 @@
 
       .price {
         line-height: 1.5;
-        color: gray;
+        color: hsl(224, 23%, 55%);
         margin-right: auto;
       }
 
@@ -101,6 +113,11 @@
 
       .card-menu-link {
         font-weight: 700;
+      }
+
+      .card-menu-link:hover {
+        text-decoration: none;
+        color: hsl(224, 23%, 55%);
       }
 
       .btn {
@@ -120,15 +137,17 @@
         margin-bottom: 1.25rem;
       }
 
-      #cancel {
-        margin-bottom: 1.25rem;
-        color: gray;
+      #payment:hover {
+        background-color: hsl(245, 70%, 69%);
       }
 
-      @media (min-width: 375px) {
-        .card {
-          width: 90%;
-        }
+      #cancel {
+        margin-bottom: 1.25rem;
+        color: hsl(224, 23%, 55%);
+      }
+
+      #cancel:hover {
+        color: hsl(223, 47%, 23%);
       }
 
       @media (min-width: 520px) {
@@ -141,14 +160,12 @@
         }
 
         .card-menu {
-          padding: 0 1rem 0 1rem;
+          padding: 1rem;
         }
       }
     </style>
   </head>
   <body>
-    <!-- TODO background - active states -->
-    <!-- ? center alignment -->
     <div class="container">
       <div class="card">
         <img
