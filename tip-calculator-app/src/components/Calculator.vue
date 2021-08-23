@@ -7,15 +7,21 @@
       <!-- User input -->
       <div class="col-md-6 col-lg-5 mb-5 mb-md-0">
         <form>
-          <p class="lead mb-2">Bill</p>
+          <p class="lead mb-2 d-flex align-items-center">
+            Bill
+            <span v-if="billErrorMsg" class="ms-auto text-danger error-msg">
+              {{ billErrorMsg }}
+            </span>
+          </p>
           <div class="input-group mb-4">
-            <span class="input-group-text"
+            <span
+              :class="[billErrorMsg ? 'border-danger' : '', 'input-group-text']"
               ><img src="../images/icon-dollar.svg" alt="Dollar icon"
             /></span>
             <input
               v-model="bill"
               type="number"
-              class="form-control"
+              :class="[billErrorMsg ? 'border-danger' : '', 'form-control']"
               id="billInput"
               aria-label="Amount in dollars"
             />
@@ -105,16 +111,31 @@
             </div>
           </div>
 
-          <p class="lead mb-2">Number of People</p>
-          <div class="input-group">
-            <span class="input-group-text"
+          <p class="lead mb-2 d-flex align-items-center">
+            Number of People
+            <span
+              class="ms-auto text-danger error-msg"
+              v-if="numOfPeopleErrorMsg"
+            >
+              {{ numOfPeopleErrorMsg }}
+            </span>
+          </p>
+          <div class="input-group mb-2 mb-lg-0">
+            <span
+              :class="[
+                numOfPeopleErrorMsg ? 'border-danger' : '',
+                'input-group-text',
+              ]"
               ><img src="../images/icon-person.svg" alt=""
             /></span>
             <input
               v-model="numOfPeople"
               type="number"
               id="numOfPeopleInput"
-              class="form-control"
+              :class="[
+                numOfPeopleErrorMsg ? 'border-danger' : '',
+                'form-control',
+              ]"
               aria-label="Number of people who would like to pay"
             />
           </div>
@@ -159,9 +180,6 @@ import { ref, computed } from 'vue';
 export default {
   name: 'Calculator',
 
-  /* TODO */
-  /* Validation */
-
   setup() {
     //refs
     const bill = ref('');
@@ -170,7 +188,7 @@ export default {
 
     //computed properties
     const tipAmountPerPerson = computed(() => {
-      if (!tipPercentage.value) return 0;
+      if (!tipPercentage.value || numOfPeople.value < 1) return 0;
       return (
         Math.round(
           (((bill.value / 100) * tipPercentage.value) / numOfPeople.value) * 100
@@ -178,16 +196,25 @@ export default {
       );
     });
 
-    const totalPerPerson = computed(
-      () =>
+    const totalPerPerson = computed(() => {
+      if (numOfPeople.value < 1) return 0;
+      return (
         Math.round(
           ((bill.value + (bill.value / 100) * tipPercentage.value) /
             numOfPeople.value) *
             100
         ) / 100
-    );
+      );
+    });
 
-    const errorMsg = computed(() => {});
+    const billErrorMsg = computed(() => {
+      if (bill.value === '') return '';
+      if (bill.value < 1) return "Can't be zero or less";
+    });
+
+    const numOfPeopleErrorMsg = computed(() =>
+      numOfPeople.value < 1 ? "Can't be zero or less" : ''
+    );
 
     //functions
     const setPercentage = (event) => {
@@ -229,11 +256,13 @@ export default {
 
     return {
       bill,
+      billErrorMsg,
       setPercentage,
       setCustomPercentage,
       numOfPeople,
-      totalPerPerson,
+      numOfPeopleErrorMsg,
       tipAmountPerPerson,
+      totalPerPerson,
       reset,
     };
   },
@@ -257,6 +286,9 @@ export default {
   color: hsl(186, 14%, 43%);
   font-weight: 700;
   font-size: 1rem;
+}
+.error-msg {
+  font-size: 0.8rem;
 }
 
 input[type='number'] {
