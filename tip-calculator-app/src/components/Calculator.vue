@@ -4,26 +4,26 @@
       <img src="../images/logo.svg" alt="" class="img-fluid" />
     </div>
     <div class="row p-5 justify-content-evenly gx-5" id="mainRow">
-      <!-- User-setting panel -->
+      <!-- User input -->
       <div class="col-md-6 col-lg-5 mb-5 mb-md-0">
         <form>
           <p class="lead mb-2">Bill</p>
           <div class="input-group mb-4">
             <span class="input-group-text"
-              ><img src="../images/icon-dollar.svg" alt=""
+              ><img src="../images/icon-dollar.svg" alt="Dollar icon"
             /></span>
             <input
               v-model="bill"
               type="number"
               class="form-control"
               id="billInput"
-              aria-label="Amount (to the nearest dollar)"
+              aria-label="Amount in dollars"
             />
           </div>
 
           <p class="lead mb-2">Select Tip %</p>
           <div class="row row-cols-2 row-cols-lg-3 g-3 text-center mb-4">
-            <!-- Item-1 -->
+            <!-- Input-1 -->
             <div class="col">
               <input
                 @click="setPercentage"
@@ -37,7 +37,7 @@
               <label class="btn custom-btn w-100" for="option1">5%</label>
             </div>
 
-            <!-- Item-2 -->
+            <!-- Input-2 -->
             <div class="col">
               <input
                 @click="setPercentage"
@@ -51,7 +51,7 @@
               <label class="btn custom-btn w-100" for="option2">10%</label>
             </div>
 
-            <!-- Item-3 -->
+            <!-- Input-3 -->
             <div class="col">
               <input
                 @click="setPercentage"
@@ -65,7 +65,7 @@
               <label class="btn custom-btn w-100" for="option3">15%</label>
             </div>
 
-            <!-- Item-4 -->
+            <!-- Input-4 -->
             <div class="col">
               <input
                 @click="setPercentage"
@@ -79,7 +79,7 @@
               <label class="btn custom-btn w-100" for="option4">25%</label>
             </div>
 
-            <!-- Item-5 -->
+            <!-- Input-5 -->
             <div class="col">
               <input
                 @click="setPercentage"
@@ -93,7 +93,7 @@
               <label class="btn custom-btn w-100" for="option5">50%</label>
             </div>
 
-            <!-- Item-6 -->
+            <!-- Input-6 -->
             <div class="col">
               <input
                 @input="setCustomPercentage"
@@ -116,13 +116,12 @@
               id="numOfPeopleInput"
               class="form-control"
               aria-label="Number of people who would like to pay"
-              min="1"
             />
           </div>
         </form>
       </div>
 
-      <!-- Display-panel -->
+      <!-- Data display -->
       <div class="col-md-6 col-lg-5 py-5 py-sm-0" id="dataDisplay">
         <div class="row px-2 px-sm-4 my-0 my-sm-5 mb-5">
           <div class="col-6">
@@ -160,6 +159,9 @@ import { ref, computed } from 'vue';
 export default {
   name: 'Calculator',
 
+  /* TODO */
+  /* Validation */
+
   setup() {
     //refs
     const bill = ref('');
@@ -167,10 +169,6 @@ export default {
     const tipPercentage = ref(0);
 
     //computed properties
-    const total = computed(
-      () => bill.value + (bill.value / 100) * tipPercentage.value
-    );
-
     const tipAmountPerPerson = computed(() => {
       if (!tipPercentage.value) return 0;
       return (
@@ -181,15 +179,15 @@ export default {
     });
 
     const totalPerPerson = computed(
-      () => Math.round((total.value / numOfPeople.value) * 100) / 100
+      () =>
+        Math.round(
+          ((bill.value + (bill.value / 100) * tipPercentage.value) /
+            numOfPeople.value) *
+            100
+        ) / 100
     );
 
-    const reset = () => {
-      bill.value = '';
-      numOfPeople.value = 1;
-      tipPercentage.value = 0;
-      removeSelectedClasses();
-    };
+    const errorMsg = computed(() => {});
 
     //functions
     const setPercentage = (event) => {
@@ -207,10 +205,19 @@ export default {
       document
         .querySelector(`[for=${event.srcElement.id}]`)
         .classList.add('selected');
+
+      document.getElementById('customTipInput').value = '';
     };
 
     const setCustomPercentage = (event) => {
       tipPercentage.value = event.srcElement.value;
+      removeSelectedClasses();
+    };
+
+    const reset = () => {
+      bill.value = '';
+      numOfPeople.value = 1;
+      tipPercentage.value = 0;
       removeSelectedClasses();
     };
 
@@ -219,11 +226,6 @@ export default {
         document.querySelector(`[for=option${i}`).classList.remove('selected');
       }
     };
-
-    /* TODO
-    - css refactoring
-    - one way data binding custom tip input
-    */
 
     return {
       bill,
@@ -251,22 +253,10 @@ export default {
   border-radius: 25px;
 }
 
-.custom-btn {
-  background-color: hsl(183, 100%, 15%);
-  color: white;
+.lead {
+  color: hsl(186, 14%, 43%);
   font-weight: 700;
-}
-
-.custom-btn:hover {
-  background-color: hsl(172, 67%, 75%);
-  border-color: hsl(172, 67%, 75%);
-  color: hsl(183, 100%, 15%);
-}
-
-.h3 {
-  font-weight: 700;
-  color: hsl(172, 67%, 45%) !important;
-  overflow-wrap: break-word;
+  font-size: 1rem;
 }
 
 input[type='number'] {
@@ -280,15 +270,27 @@ input[type='number']:hover {
   cursor: pointer;
 }
 
+#billInput,
+#numOfPeopleInput {
+  border-left: 0;
+}
+
+.custom-btn {
+  background-color: hsl(183, 100%, 15%);
+  color: white;
+  font-weight: 700;
+}
+
+.custom-btn:hover {
+  background-color: hsl(172, 67%, 75%);
+  border-color: hsl(172, 67%, 75%);
+  color: hsl(183, 100%, 15%);
+}
+
 .input-group:hover span,
 .input-group:hover input[type='number'],
 #customTipInput:hover {
   border-color: hsl(172, 67%, 45%);
-}
-
-#billInput,
-#numOfPeopleInput {
-  border-left: 0;
 }
 
 #customTipInput {
@@ -302,10 +304,10 @@ input[type='number']:hover {
   font-weight: 700;
 }
 
-.lead {
-  color: hsl(186, 14%, 43%);
+.h3 {
   font-weight: 700;
-  font-size: 1rem;
+  color: hsl(172, 67%, 45%) !important;
+  overflow-wrap: break-word;
 }
 
 .person {
