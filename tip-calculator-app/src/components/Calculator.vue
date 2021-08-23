@@ -34,7 +34,7 @@
                 value="5"
                 autocomplete="off"
               />
-              <label class="btn btn-secondary w-100" for="option1">5%</label>
+              <label class="btn custom-btn w-100" for="option1">5%</label>
             </div>
 
             <!-- Item-2 -->
@@ -48,7 +48,7 @@
                 value="10"
                 autocomplete="off"
               />
-              <label class="btn btn-secondary w-100" for="option2">10%</label>
+              <label class="btn custom-btn w-100" for="option2">10%</label>
             </div>
 
             <!-- Item-3 -->
@@ -62,7 +62,7 @@
                 value="15"
                 autocomplete="off"
               />
-              <label class="btn btn-secondary w-100" for="option3">15%</label>
+              <label class="btn custom-btn w-100" for="option3">15%</label>
             </div>
 
             <!-- Item-4 -->
@@ -76,7 +76,7 @@
                 value="25"
                 autocomplete="off"
               />
-              <label class="btn btn-secondary w-100" for="option4">25%</label>
+              <label class="btn custom-btn w-100" for="option4">25%</label>
             </div>
 
             <!-- Item-5 -->
@@ -90,12 +90,13 @@
                 value="50"
                 autocomplete="off"
               />
-              <label class="btn btn-secondary w-100" for="option5">50%</label>
+              <label class="btn custom-btn w-100" for="option5">50%</label>
             </div>
 
             <!-- Item-6 -->
             <div class="col">
               <input
+                @input="setCustomPercentage"
                 type="number"
                 class="form-control text-light"
                 id="customTipInput"
@@ -162,7 +163,6 @@ export default {
   setup() {
     //refs
     const bill = ref('');
-
     const numOfPeople = ref(1);
     const tipPercentage = ref(0);
 
@@ -182,11 +182,36 @@ export default {
       bill.value = '';
       numOfPeople.value = 1;
       tipPercentage.value = 0;
+      removeSelectedClasses();
     };
 
     //functions
     const setPercentage = (event) => {
       tipPercentage.value = event.srcElement.value;
+
+      for (let i = 1; i <= 5; i++) {
+        const labelName = `option${i}`;
+
+        if (labelName === event.srcElement.id) continue;
+        document
+          .querySelector(`[for=${labelName}`)
+          .classList.remove('selected');
+      }
+
+      document
+        .querySelector(`[for=${event.srcElement.id}]`)
+        .classList.add('selected');
+    };
+
+    const setCustomPercentage = (event) => {
+      tipPercentage.value = event.srcElement.value;
+      removeSelectedClasses();
+    };
+
+    const removeSelectedClasses = () => {
+      for (let i = 1; i <= 5; i++) {
+        document.querySelector(`[for=option${i}`).classList.remove('selected');
+      }
     };
 
     /* TODO
@@ -199,6 +224,7 @@ export default {
     return {
       bill,
       setPercentage,
+      setCustomPercentage,
       numOfPeople,
       totalPerPerson,
       tipAmountPerPerson,
@@ -221,13 +247,14 @@ export default {
   border-radius: 25px;
 }
 
-.btn-secondary {
-  background-color: hsl(183, 100%, 15%) !important;
+.custom-btn {
+  background-color: hsl(183, 100%, 15%);
+  color: white;
   font-weight: 700;
 }
 
-.btn-secondary:hover {
-  background-color: hsl(172, 67%, 75%) !important;
+.custom-btn:hover {
+  background-color: hsl(172, 67%, 75%);
   border-color: hsl(172, 67%, 75%);
   color: hsl(183, 100%, 15%);
 }
@@ -258,10 +285,6 @@ input[type='number']:hover {
 #billInput,
 #numOfPeopleInput {
   border-left: 0;
-}
-
-input[type='number']:focus {
-  border-color: hsl(172, 67%, 45%);
 }
 
 #customTipInput {
@@ -298,20 +321,9 @@ input[type='number']:focus {
   background-color: hsl(172, 67%, 75%);
 }
 
-.active {
-  background-color: hsl(172, 67%, 45%);
-  color: hsl(183, 100%, 15%);
+.selected {
+  background-color: hsl(172, 67%, 45%) !important;
+  border-color: hsl(172, 67%, 45%) !important;
+  color: hsl(183, 100%, 15%) !important;
 }
-
-/* @media (min-width: 768px) {
-  #customTipInput::placeholder {
-    text-align: center;
-    color: white;
-    font-size: 0.75rem;
-  }
-
-  #customTipInput {
-    -moz-appearance: textfield;
-  }
-} */
 </style>
