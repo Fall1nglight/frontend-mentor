@@ -180,6 +180,10 @@ import { ref, computed } from 'vue';
 export default {
   name: 'Calculator',
 
+  /* TODO */
+  /* customTip validation */
+  /* minus bill shouldn't process data */
+
   setup() {
     //refs
     const bill = ref('');
