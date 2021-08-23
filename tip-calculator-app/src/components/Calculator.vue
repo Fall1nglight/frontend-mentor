@@ -130,7 +130,7 @@
             <span class="person">/ person</span>
           </div>
           <div class="col-6 h3 text-end">
-            {{ '$' + Math.round(tipAmountPerPerson * 100) / 100 }}
+            {{ `$${tipAmountPerPerson}` }}
           </div>
         </div>
 
@@ -140,7 +140,7 @@
             <span class="person">/ person</span>
           </div>
           <div class="col-6 h3 text-end">
-            {{ '$' + Math.round(totalPerPerson * 100) / 100 }}
+            {{ `$${totalPerPerson}` }}
           </div>
         </div>
 
@@ -173,10 +173,16 @@ export default {
 
     const tipAmountPerPerson = computed(() => {
       if (!tipPercentage.value) return 0;
-      return ((bill.value / 100) * tipPercentage.value) / numOfPeople.value;
+      return (
+        Math.round(
+          (((bill.value / 100) * tipPercentage.value) / numOfPeople.value) * 100
+        ) / 100
+      );
     });
 
-    const totalPerPerson = computed(() => total.value / numOfPeople.value);
+    const totalPerPerson = computed(
+      () => Math.round((total.value / numOfPeople.value) * 100) / 100
+    );
 
     const reset = () => {
       bill.value = '';
@@ -215,11 +221,9 @@ export default {
     };
 
     /* TODO
-    - {{}} clearout
-    - css átrendezés
-    - js refactoring
-    - html clearout margin / padding / responsive stuff
-     */
+    - css refactoring
+    - one way data binding custom tip input
+    */
 
     return {
       bill,
