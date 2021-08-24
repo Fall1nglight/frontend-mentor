@@ -275,7 +275,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 #mainRow {
   background: white;
   border-radius: 25px;
