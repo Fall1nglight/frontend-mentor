@@ -180,10 +180,6 @@ import { ref, computed } from 'vue';
 export default {
   name: 'Calculator',
 
-  /* TODO */
-  /* customTip validation */
-  /* minus bill shouldn't process data */
-
   setup() {
     //refs
     const bill = ref('');
@@ -201,7 +197,7 @@ export default {
     });
 
     const totalPerPerson = computed(() => {
-      if (numOfPeople.value < 1) return 0;
+      if (numOfPeople.value < 1 || bill.value < 1) return 0;
       return (
         Math.round(
           ((bill.value + (bill.value / 100) * tipPercentage.value) /
@@ -221,27 +217,30 @@ export default {
     );
 
     //functions
-    const setPercentage = (event) => {
-      tipPercentage.value = event.srcElement.value;
+    const setPercentage = ({
+      srcElement: { value: inputValue },
+      srcElement: { id },
+    }) => {
+      tipPercentage.value = inputValue;
 
       for (let i = 1; i <= 5; i++) {
         const labelName = `option${i}`;
 
-        if (labelName === event.srcElement.id) continue;
+        if (labelName === id) continue;
+
         document
           .querySelector(`[for=${labelName}`)
           .classList.remove('selected');
       }
 
-      document
-        .querySelector(`[for=${event.srcElement.id}]`)
-        .classList.add('selected');
+      document.querySelector(`[for=${id}]`).classList.add('selected');
 
       document.getElementById('customTipInput').value = '';
     };
 
-    const setCustomPercentage = (event) => {
-      tipPercentage.value = event.srcElement.value;
+    const setCustomPercentage = ({ srcElement: { value: inputValue } }) => {
+      if (inputValue < 0) return;
+      tipPercentage.value = inputValue;
       removeSelectedClasses();
     };
 
