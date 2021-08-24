@@ -1,6 +1,6 @@
 <template>
-  <div class="container py-5 p-sm-5">
-    <div class="text-center mb-5">
+  <div class="container p-4 p-sm-5">
+    <div class="text-center mb-5 mt-4 mt-sm-0">
       <img src="../images/logo.svg" alt="" class="img-fluid" />
     </div>
     <div class="row p-5 justify-content-evenly gx-5" id="mainRow">
@@ -208,13 +208,12 @@ export default {
     });
 
     const billErrorMsg = computed(() => {
-      if (bill.value === '') return '';
-      if (bill.value < 1) return "Can't be zero or less";
+      return isValid(bill.value);
     });
 
-    const numOfPeopleErrorMsg = computed(() =>
-      numOfPeople.value < 1 ? "Can't be zero or less" : ''
-    );
+    const numOfPeopleErrorMsg = computed(() => {
+      return isValid(numOfPeople.value);
+    });
 
     //functions
     const setPercentage = ({
@@ -249,6 +248,10 @@ export default {
       numOfPeople.value = 1;
       tipPercentage.value = 0;
       removeSelectedClasses();
+    };
+
+    const isValid = (value) => {
+      if (value < 1 && value !== '') return "Cant't be zero or less";
     };
 
     const removeSelectedClasses = () => {
