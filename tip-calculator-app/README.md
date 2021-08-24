@@ -13,6 +13,7 @@ This is a solution to the [Tip calculator app challenge on Frontend Mentor](http
   - [What I learned](#what-i-learned)
   - [Useful resources](#useful-resources)
 - [Author](#author)
+- [Vue setup](#project-setup)
 
 ## Overview
 
@@ -36,10 +37,10 @@ Users should be able to:
 
 ### Built with
 
-- Semantic HTML5 markup
-- CSS custom properties
 - [Bootstrap 5](https://getbootstrap.com)
 - [Vue 3](https://v3.vuejs.org)
+- Semantic HTML5 markup
+- CSS custom properties
 
 ### What I learned
 
@@ -70,7 +71,3 @@ npm run serve
 ```
 npm run build
 ```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
