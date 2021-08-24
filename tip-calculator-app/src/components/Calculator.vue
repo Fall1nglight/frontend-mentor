@@ -15,13 +15,13 @@
           </p>
           <div class="input-group mb-4">
             <span
-              :class="[billErrorMsg ? 'border-danger' : '', 'input-group-text']"
+              :class="[{ 'border-danger': billErrorMsg }, 'input-group-text']"
               ><img src="../images/icon-dollar.svg" alt="Dollar icon"
             /></span>
             <input
               v-model="bill"
               type="number"
-              :class="[billErrorMsg ? 'border-danger' : '', 'form-control']"
+              :class="[{ 'border-danger': billErrorMsg }, 'form-control']"
               id="billInput"
               aria-label="Amount in dollars"
             />
@@ -123,7 +123,7 @@
           <div class="input-group mb-2 mb-lg-0">
             <span
               :class="[
-                numOfPeopleErrorMsg ? 'border-danger' : '',
+                { 'border-danger': numOfPeopleErrorMsg },
                 'input-group-text',
               ]"
               ><img src="../images/icon-person.svg" alt=""
@@ -133,7 +133,7 @@
               type="number"
               id="numOfPeopleInput"
               :class="[
-                numOfPeopleErrorMsg ? 'border-danger' : '',
+                { 'border-danger': numOfPeopleErrorMsg },
                 'form-control',
               ]"
               aria-label="Number of people who would like to pay"
