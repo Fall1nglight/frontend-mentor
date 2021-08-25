@@ -1,10 +1,12 @@
 <template>
   <div class="container-sm p-5 mt-5">
+    <!-- Header -->
+    <!-- TODO d-flex és mind2 egy sorba -->
     <div class="row justify-content-center">
-      <div class="heading col-sm-5 col-md-4 col-lg-3">
-        <h1>Todo</h1>
+      <div class="heading h1 col-5 col-md-4 col-lg-3">
+        Todo
       </div>
-      <div class="toggler-icon col-sm-5 col-md-4 col-lg-3 text-end">
+      <div class="toggler-icon col-5 col-md-4 col-lg-3 text-end">
         <button class="btn">
           <img
             :src="togglerIcon"
@@ -13,6 +15,30 @@
             @click="toggleDarkMode"
           />
         </button>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="row justify-content-center mt-5">
+      <div
+        :class="[
+          'col-sm-10 col-md-8 col-lg-6 p-3',
+          darkMode ? 'form-dark' : 'form-light',
+        ]"
+        id="main-form"
+      >
+        <form @submit="addTodo">
+          <div class="row g-3 align-items-center">
+            <div class="col-1"></div>
+            <div class="col-11">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Create a new todo..."
+              />
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -48,11 +74,15 @@ export default {
     const toggleDarkMode = () => {
       darkMode.value = !darkMode.value;
     };
+
+    const addTodo = () => {};
+
     return {
       darkMode,
       togglerIcon,
       togglerIconCaption,
       toggleDarkMode,
+      addTodo,
     };
   },
 };
@@ -96,12 +126,31 @@ export default {
 
 /* Heading */
 .heading {
-  text-align: start;
-}
-
-.heading h1 {
   text-transform: uppercase;
   font-weight: 700;
   color: white;
+}
+
+/* Form & Input */
+#main-form {
+  border-radius: 10px;
+}
+
+.form-dark {
+  background-color: hsl(235, 24%, 19%);
+}
+
+.form-light {
+  background-color: hsl(236, 33%, 92%);
+}
+
+.form-control {
+  background-color: transparent !important;
+  border: none;
+}
+
+.form-control::placeholder {
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 </style>
